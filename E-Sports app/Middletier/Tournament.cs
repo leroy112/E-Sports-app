@@ -24,6 +24,9 @@ namespace Middletier
         List<Team> Participants = new List<Team>();
         List<Match> Matches = new List<Match>();
 
+        Team team1;
+        Team team2;
+
         #endregion
 
         #region Constructor
@@ -55,7 +58,73 @@ namespace Middletier
             this.description = description;
         }
 
-        #endregion
+        public void SetAdmin(User admin)
+        {
+            this.admin = admin;
+        }
 
+        public void SetRules(List<string> newrules)
+        {
+            foreach(string rule in newrules)
+            {
+                Rules.Add(rule);
+            }
+        }
+
+        public void SetPrizes(List<string> newprizes)
+        {
+            foreach(string prize in newprizes)
+            {
+                Prizes.Add(prize);
+            }
+        }
+
+        public void AddTeam(Team team)
+        {
+            Participants.Add(team);
+        }
+
+        public void RemoveTeam(Team team)
+        {
+            Participants.Remove(team);
+        }
+
+        public void AddMatch(Match match)
+        {
+            Matches.Add(match);
+        }
+
+        public void CalculateSeeding()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMatches()
+        {
+            if(team1 != null && team2 != null)
+            {
+                Match match = new Match(team1,team2);
+                Matches.Add(match);
+                team1 = null;
+                team2 = null;
+            }
+            else
+            {
+                foreach(Team team in Participants)
+                {
+                    if(team1 == null)
+                    {
+                        team1 = team;
+                    }
+                    else if(team2 == null)
+                    {
+                        team2 = team;
+                        break;
+                    }
+                }
+            }
+        }
+        
+        #endregion
     }
 }
