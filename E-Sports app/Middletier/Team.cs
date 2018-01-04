@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Middletier
 {
-    class Team
+    class Team 
     {
         
         #region Fields
