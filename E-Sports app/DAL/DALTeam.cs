@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    class DALTeam
+    public class DALTeam
     {
         #region Fields
 
@@ -36,6 +36,7 @@ namespace DAL
         {
             SqlCommand myCommand = new SqlCommand("DELETE FROM Team Where Teamnaam = '"+TeamName+"'", conn);
         }
+        
 
         #endregion
         

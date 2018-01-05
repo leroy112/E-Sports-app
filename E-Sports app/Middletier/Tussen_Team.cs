@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL;
 
-namespace DAL
+namespace Middletier
 {
-    public class DALTournament
+    class Tussen_Team
     {
+        
     }
 }

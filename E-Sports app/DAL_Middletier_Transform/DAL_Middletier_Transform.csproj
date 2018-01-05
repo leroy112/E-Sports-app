@@ -49,10 +49,6 @@
       <Project>{b8536083-8269-4cdd-9030-29862322cba3}</Project>
       <Name>DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Middletier\Middletier.csproj">
-      <Project>{2f1234ef-2f99-47c9-b703-f89ef06b0666}</Project>
-      <Name>Middletier</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
