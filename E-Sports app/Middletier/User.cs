@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Middletier
 {
-    public enum Account_Type { player, admin };
+    public enum Account_Type { Player, Admin };
 
     class User
     {

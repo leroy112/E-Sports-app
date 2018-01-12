@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DAL;
 
-namespace Middletier
+namespace Entity
 {
-    class Tussen_Team
+    class MatchEntity
     {
-        
     }
 }

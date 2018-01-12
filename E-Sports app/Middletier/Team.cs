@@ -8,9 +8,10 @@ namespace Middletier
 {
     class Team 
     {
-        
+
         #region Fields
 
+        int ID;
         string TeamName;
         string ShortHandle;
         string Password;
@@ -21,8 +22,9 @@ namespace Middletier
 
         #region Constructor
 
-        public Team(string teamname, string shorthandle, string password)
+        public Team(int ID, string teamname, string shorthandle, string password)
         {
+            this.ID = ID;
             this.TeamName = teamname;
             this.ShortHandle = shorthandle;
             this.Password = password;

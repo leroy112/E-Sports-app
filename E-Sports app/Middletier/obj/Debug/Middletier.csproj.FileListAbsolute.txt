@@ -1,0 +1,8 @@
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Middletier\bin\Debug\Middletier.dll
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Middletier\bin\Debug\Middletier.pdb
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Middletier\bin\Debug\DAL.dll
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Middletier\bin\Debug\DAL.pdb
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Middletier\obj\Debug\Middletier.csprojResolveAssemblyReference.cache
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Middletier\obj\Debug\Middletier.csproj.CoreCompileInputs.cache
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Middletier\obj\Debug\Middletier.dll
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Middletier\obj\Debug\Middletier.pdb

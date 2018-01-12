@@ -13,6 +13,7 @@ namespace Middletier
 
         #region Fields
 
+        int ID;
         string Name;
         GameName Game;
         DateTime StartDate;
@@ -30,6 +31,20 @@ namespace Middletier
         #endregion
 
         #region Constructor
+        
+        public Tournament(int id, string name, GameName game, DateTime startdate, string description, User admin)
+        {
+            this.ID = id;
+            this.Name = name;
+            this.Game = game;
+            this.StartDate = startdate;
+            this.description = description;
+            this.admin = admin;
+        }
+
+        #endregion
+
+        #region Methods
 
         public void SetName(string name)
         {
@@ -104,7 +119,7 @@ namespace Middletier
             if(team1 != null && team2 != null)
             {
                 Match match = new Match(team1,team2);
-                Matches.Add(match);
+                AddMatch(match);
                 team1 = null;
                 team2 = null;
             }
