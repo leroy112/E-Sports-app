@@ -28,126 +28,196 @@ namespace DAL
 
         public void AddTeam(string TeamName, string Shorthandle, string Wachtwoord)
         {
-            using (conn)
+            try
             {
-                conn.Open();
-                SqlCommand myCommand = new SqlCommand("INSERT INTO Team (TeamNaam, Shorthandle, Wachtwoord) " + "Values (" + TeamName + ", " + Shorthandle + ", " + Wachtwoord + ")", conn);
-                myCommand.ExecuteNonQuery();
-                conn.Close();
+                using (conn)
+                {
+                    conn.Open();
+                    SqlCommand myCommand = new SqlCommand("INSERT INTO Team (TeamNaam, Shorthandle, Wachtwoord) " + "Values (" + TeamName + ", " + Shorthandle + ", " + Wachtwoord + ")", conn);
+                    myCommand.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (SqlException)
+            {
+
             }
         }
 
         public void RemoveTeam(int TeamID)
         {
-            using (conn)
+            try
             {
-                conn.Open();
-                SqlCommand myCommand = new SqlCommand("DELETE FROM Team Where ID = '" + TeamID + "'", conn);
-                myCommand.ExecuteNonQuery();
-                conn.Close();
+                using (conn)
+                {
+                    conn.Open();
+                    SqlCommand myCommand = new SqlCommand("DELETE FROM Team Where ID = '" + TeamID + "'", conn);
+                    myCommand.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (SqlException)
+            {
+
             }
         }
 
         public void SetTeamName(string teamname, int TeamID)
         {
-            using (conn)
+            try
             {
-                conn.Open();
-                SqlCommand mycommand = new SqlCommand("UPDATE Team SET Teamnaam = '" + teamname + "' WHERE ID = '" + TeamID + "'; ", conn);
-                mycommand.ExecuteNonQuery();
-                conn.Close();
+                using (conn)
+                {
+                    conn.Open();
+                    SqlCommand mycommand = new SqlCommand("UPDATE Team SET Teamnaam = '" + teamname + "' WHERE ID = '" + TeamID + "'; ", conn);
+                    mycommand.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (SqlException)
+            {
+
             }
         }
 
         public void SetShortHandle(string shorthandle, int TeamID)
         {
-            using (conn)
+            try
             {
-                conn.Open();
-                SqlCommand mycommand = new SqlCommand("UPDATE Team SET Shorthandle = '" + shorthandle + "' WHERE ID = '" + TeamID + "'; ", conn);
-                mycommand.ExecuteNonQuery();
-                conn.Close();
+                using (conn)
+                {
+                    conn.Open();
+                    SqlCommand mycommand = new SqlCommand("UPDATE Team SET Shorthandle = '" + shorthandle + "' WHERE ID = '" + TeamID + "'; ", conn);
+                    mycommand.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (SqlException)
+            {
+
             }
         }
 
         public void SetPassword(string password, int TeamID)
         {
-            using (conn)
+            try
             {
-                conn.Open();
-                SqlCommand mycommand = new SqlCommand("UPDATE Team SET Wachtwoord = '" + password + "' WHERE ID = '" + TeamID  + "'; ", conn);
-                mycommand.ExecuteNonQuery();
-                conn.Close();
+                using (conn)
+                {
+                    conn.Open();
+                    SqlCommand mycommand = new SqlCommand("UPDATE Team SET Wachtwoord = '" + password + "' WHERE ID = '" + TeamID + "'; ", conn);
+                    mycommand.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (SqlException)
+            {
+
             }
         }
 
         public void AddMember(int teamID, string Username)
         {
-            using (conn)
+            try
             {
-                conn.Open();
-                SqlCommand mycommand = new SqlCommand("AddMember("+Username+","+teamID+"; ", conn);
-                mycommand.ExecuteNonQuery();
-                conn.Close();
+                using (conn)
+                {
+                    conn.Open();
+                    SqlCommand mycommand = new SqlCommand("AddMember(" + Username + "," + teamID + "; ", conn);
+                    mycommand.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (SqlException)
+            {
+
             }
         }
 
         public void RemoveMember(int teamID, string username)
         {
-            using (conn)
+            try
             {
-                conn.Open();
-                SqlCommand mycommand = new SqlCommand("AddMember(" + teamID + "," + username + "; ", conn);
-                mycommand.ExecuteNonQuery();
-                conn.Close();
+                using (conn)
+                {
+                    conn.Open();
+                    SqlCommand mycommand = new SqlCommand("AddMember(" + teamID + "," + username + "; ", conn);
+                    mycommand.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (SqlException)
+            {
+
             }
         }
 
         public void AddTournament(int TeamID, int TournamentID)
         {
-            using (conn)
+            try
             {
-                conn.Open();
-                SqlCommand mycommand = new SqlCommand("AddTournament(" + TeamID + "," + TournamentID + "; ", conn);
-                mycommand.ExecuteNonQuery();
-                conn.Close();
+                using (conn)
+                {
+                    conn.Open();
+                    SqlCommand mycommand = new SqlCommand("AddTournament(" + TeamID + "," + TournamentID + "; ", conn);
+                    mycommand.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (SqlException)
+            {
+
             }
         }
 
         public void RemoverTournament(int teamID, int tournamentID)
         {
-            using (conn)
+            try
             {
-                conn.Open();
-                SqlCommand mycommand = new SqlCommand("RemoveTournament(" + teamID + "," + tournamentID + "; ", conn);
-                mycommand.ExecuteNonQuery();
-                conn.Close();
+                using (conn)
+                {
+                    conn.Open();
+                    SqlCommand mycommand = new SqlCommand("RemoveTournament(" + teamID + "," + tournamentID + "; ", conn);
+                    mycommand.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (SqlException)
+            {
+
             }
         }
 
         public void GetAllTeams()
         {
-            using (conn)
+            try
             {
-                conn.Open();
-
-                using (var cmd = new SqlCommand())
+                using (conn)
                 {
-                    cmd.Connection = conn;
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.CommandText = "GetAllTeams";
+                    conn.Open();
 
-                    using (var reader = cmd.ExecuteReader())
+                    using (var cmd = new SqlCommand())
                     {
-                        while (reader.Read())
+                        cmd.Connection = conn;
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.CommandText = "GetAllTeams";
+
+                        using (var reader = cmd.ExecuteReader())
                         {
-                            reader["ID"].ToString();
-                            reader["TeamNaam"].ToString();
-                            reader["ShortHandle"].ToString();
+                            while (reader.Read())
+                            {
+                                reader["ID"].ToString();
+                                reader["TeamNaam"].ToString();
+                                reader["ShortHandle"].ToString();
+                            }
                         }
                     }
+                    conn.Close();
                 }
-                conn.Close();
+            }
+            catch (SqlException)
+            {
+
             }
         }
 
