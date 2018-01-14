@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities;
 
 namespace DAL
 {
@@ -98,14 +99,14 @@ namespace DAL
             }
         }
 
-        public void SetPassword(string password, int TeamID)
+        public void SetPassword(TeamEntity entity)
         {
             try
             {
                 using (conn)
                 {
                     conn.Open();
-                    SqlCommand mycommand = new SqlCommand("UPDATE Team SET Wachtwoord = '" + password + "' WHERE ID = '" + TeamID + "'; ", conn);
+                    SqlCommand mycommand = new SqlCommand("UPDATE Team SET Wachtwoord = '" + entity.Password + "' WHERE ID = '" + entity.ID + "'; ", conn);
                     mycommand.ExecuteNonQuery();
                     conn.Close();
                 }
@@ -188,8 +189,10 @@ namespace DAL
             }
         }
 
-        public void GetAllTeams()
+        public List<TeamEntity> GetAllTeams()
         {
+            List<TeamEntity> entities = new List<TeamEntity>();
+
             try
             {
                 using (conn)
@@ -206,9 +209,13 @@ namespace DAL
                         {
                             while (reader.Read())
                             {
-                                reader["ID"].ToString();
-                                reader["TeamNaam"].ToString();
-                                reader["ShortHandle"].ToString();
+                                TeamEntity entity = new TeamEntity();
+
+                                entity.ID = reader.GetInt32(reader.GetOrdinal("ID"));
+                                entity.TeamName = reader.GetString(reader.GetOrdinal("TeamNaam"));
+                                entity.ShortHandle = reader.GetString(reader.GetOrdinal("ShortHandle"));
+
+                                entities.Add(entity);
                             }
                         }
                     }
@@ -219,6 +226,7 @@ namespace DAL
             {
 
             }
+            return entities;
         }
 
 

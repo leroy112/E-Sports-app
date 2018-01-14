@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities;
 
 namespace Middletier
 {
-    class Tournament
+    public class Tournament
     {
 
         public enum GameName {LeagueOfLegends, CSGO }
 
         #region Fields
+        internal TournamentEntity Entity
+        {
+            get; set;
+        }
 
         int ID;
         string Name;
@@ -42,6 +47,10 @@ namespace Middletier
             this.admin = admin;
         }
 
+        public Tournament(TournamentEntity entity)
+        {
+            Entity = entity;
+        }
         #endregion
 
         #region Methods

@@ -3,13 +3,57 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL;
+using Entities;
 
 namespace Middletier
 {
-    class Team 
+    public class Team 
     {
 
         #region Fields
+        private DALTeam databaseObject = new DALTeam();
+        internal TeamEntity Entity
+        {
+            get
+            {
+                TeamEntity entity = new TeamEntity();
+
+                entity.ID = this.ID;
+                entity.TeamName = this.TeamName;
+                entity.ShortHandle = this.ShortHandle;
+                entity.Password = this.Password;
+
+                foreach (User member in Members)
+                {
+                    entity.Members.Add(member.Entity);
+                }
+
+                foreach (Tournament tournament in Tournaments)
+                {
+                    entity.Tournaments.Add(tournament.Entity);
+                }
+
+                return entity;
+            }
+            set
+            {
+                this.ID = value.ID;
+                this.TeamName = value.TeamName;
+                this.ShortHandle = value.ShortHandle;
+                this.Password = value.Password;
+
+                foreach (UserEntity member in value.Members)
+                {
+                    this.Members.Add(new User(member));
+                }
+
+                foreach (TournamentEntity tournament in value.Tournaments)
+                {
+                    this.Tournaments.Add(new Tournament(tournament));
+                }
+            }
+        }
 
         int ID;
         string TeamName;
@@ -30,6 +74,10 @@ namespace Middletier
             this.Password = password;
         }
 
+        public Team(TeamEntity entity)
+        {
+            Entity = entity;
+        }
         #endregion
 
         #region Methods
@@ -47,6 +95,7 @@ namespace Middletier
         public void SetPassword(string password)
         {
             this.Password = password;
+            databaseObject.SetPassword(Entity);
         }
 
         public void AddMember(User user)
@@ -69,6 +118,17 @@ namespace Middletier
             Tournaments.Remove(tournament);
         }
 
+        public List<Team> GetAllTeams()
+        {
+            List<Team> teams = new List<Team>();
+            List<TeamEntity> entities = databaseObject.GetAllTeams();
+
+            foreach(TeamEntity entity in entities)
+            {
+                teams.Add(new Team(entity));
+            }
+            return teams;
+        }
         #endregion
     }
 }

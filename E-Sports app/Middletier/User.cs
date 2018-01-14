@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities;
 
 namespace Middletier
 {
     public enum Account_Type { Player, Admin };
 
-    class User
+    public class User
     {
         #region Fields
+        internal UserEntity Entity
+        {
+            get; set;
+        }
+
 
         string Username;
         Account_Type Account;
@@ -36,6 +42,10 @@ namespace Middletier
             this.Email = email;
         }
 
+        public User(UserEntity entity)
+        {
+            Entity = entity;
+        }
         #endregion
 
         #region Methods
