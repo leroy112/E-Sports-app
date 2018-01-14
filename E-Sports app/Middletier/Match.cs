@@ -4,13 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entities;
+using DAL;
 
 namespace Middletier
 {
-    public class Match : MatchEntity
+    public class Match
     {
 
         #region Fields
+        private DALMatch databaseObject = new DALMatch();
+
+        internal MatchEntity entity
+        {
+            get; set;
+        }
 
         int MatchID;
         Team Team1;

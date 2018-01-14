@@ -27,14 +27,14 @@ namespace DAL
 
         #region Methods
 
-        public void AddTeam(string TeamName, string Shorthandle, string Wachtwoord)
+        public void AddTeam(TeamEntity  entity)
         {
             try
             {
                 using (conn)
                 {
                     conn.Open();
-                    SqlCommand myCommand = new SqlCommand("INSERT INTO Team (TeamNaam, Shorthandle, Wachtwoord) " + "Values (" + TeamName + ", " + Shorthandle + ", " + Wachtwoord + ")", conn);
+                    SqlCommand myCommand = new SqlCommand("INSERT INTO Team (TeamNaam, Shorthandle, Wachtwoord) " + "Values (" + entity.TeamName + ", " + entity.ShortHandle + ", " + entity.Password + ")", conn);
                     myCommand.ExecuteNonQuery();
                     conn.Close();
                 }
@@ -45,14 +45,14 @@ namespace DAL
             }
         }
 
-        public void RemoveTeam(int TeamID)
+        public void RemoveTeam(TeamEntity entity)
         {
             try
             {
                 using (conn)
                 {
                     conn.Open();
-                    SqlCommand myCommand = new SqlCommand("DELETE FROM Team Where ID = '" + TeamID + "'", conn);
+                    SqlCommand myCommand = new SqlCommand("DELETE FROM Team Where ID = '" + entity.ID + "'", conn);
                     myCommand.ExecuteNonQuery();
                     conn.Close();
                 }
@@ -63,14 +63,14 @@ namespace DAL
             }
         }
 
-        public void SetTeamName(string teamname, int TeamID)
+        public void SetTeamName(TeamEntity entity)
         {
             try
             {
                 using (conn)
                 {
                     conn.Open();
-                    SqlCommand mycommand = new SqlCommand("UPDATE Team SET Teamnaam = '" + teamname + "' WHERE ID = '" + TeamID + "'; ", conn);
+                    SqlCommand mycommand = new SqlCommand("UPDATE Team SET Teamnaam = '" + entity.TeamName + "' WHERE ID = '" + entity.ID + "'; ", conn);
                     mycommand.ExecuteNonQuery();
                     conn.Close();
                 }
@@ -81,14 +81,14 @@ namespace DAL
             }
         }
 
-        public void SetShortHandle(string shorthandle, int TeamID)
+        public void SetShortHandle(TeamEntity entity)
         {
             try
             {
                 using (conn)
                 {
                     conn.Open();
-                    SqlCommand mycommand = new SqlCommand("UPDATE Team SET Shorthandle = '" + shorthandle + "' WHERE ID = '" + TeamID + "'; ", conn);
+                    SqlCommand mycommand = new SqlCommand("UPDATE Team SET Shorthandle = '" + entity.ShortHandle + "' WHERE ID = '" + entity.ID + "'; ", conn);
                     mycommand.ExecuteNonQuery();
                     conn.Close();
                 }
@@ -117,14 +117,14 @@ namespace DAL
             }
         }
 
-        public void AddMember(int teamID, string Username)
+        public void AddMember(TeamEntity teamentity, UserEntity userentity)
         {
             try
             {
                 using (conn)
                 {
                     conn.Open();
-                    SqlCommand mycommand = new SqlCommand("AddMember(" + Username + "," + teamID + "; ", conn);
+                    SqlCommand mycommand = new SqlCommand("AddMember(" + userentity.Username + "," + teamentity.ID + "; ", conn);
                     mycommand.ExecuteNonQuery();
                     conn.Close();
                 }
@@ -135,14 +135,14 @@ namespace DAL
             }
         }
 
-        public void RemoveMember(int teamID, string username)
+        public void RemoveMember(TeamEntity teamentity, UserEntity userentity)
         {
             try
             {
                 using (conn)
                 {
                     conn.Open();
-                    SqlCommand mycommand = new SqlCommand("AddMember(" + teamID + "," + username + "; ", conn);
+                    SqlCommand mycommand = new SqlCommand("AddMember(" + teamentity.ID + "," + userentity.Username + "; ", conn);
                     mycommand.ExecuteNonQuery();
                     conn.Close();
                 }
@@ -153,14 +153,14 @@ namespace DAL
             }
         }
 
-        public void AddTournament(int TeamID, int TournamentID)
+        public void AddTournament(TeamEntity teamentity, TournamentEntity tournamententity)
         {
             try
             {
                 using (conn)
                 {
                     conn.Open();
-                    SqlCommand mycommand = new SqlCommand("AddTournament(" + TeamID + "," + TournamentID + "; ", conn);
+                    SqlCommand mycommand = new SqlCommand("AddTournament(" + teamentity.ID + "," + tournamententity.ID + "; ", conn);
                     mycommand.ExecuteNonQuery();
                     conn.Close();
                 }
@@ -171,14 +171,14 @@ namespace DAL
             }
         }
 
-        public void RemoverTournament(int teamID, int tournamentID)
+        public void RemoveTournament(TeamEntity teamentity, TournamentEntity tournamententity)
         {
             try
             {
                 using (conn)
                 {
                     conn.Open();
-                    SqlCommand mycommand = new SqlCommand("RemoveTournament(" + teamID + "," + tournamentID + "; ", conn);
+                    SqlCommand mycommand = new SqlCommand("RemoveTournament(" + teamentity.ID + "," + tournamententity.ID+ "; ", conn);
                     mycommand.ExecuteNonQuery();
                     conn.Close();
                 }

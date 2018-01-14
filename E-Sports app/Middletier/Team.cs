@@ -85,11 +85,13 @@ namespace Middletier
         public void SetTeamName(string teamname)
         {
             this.TeamName = teamname;
+            databaseObject.SetTeamName(Entity);
         }
 
         public void SetShortHandle(string shorthandle)
         {
             this.ShortHandle = shorthandle;
+            databaseObject.SetShortHandle(Entity);
         }
 
         public void SetPassword(string password)
@@ -101,21 +103,25 @@ namespace Middletier
         public void AddMember(User user)
         {
             Members.Add(user);
+            databaseObject.AddMember(Entity, user.Entity);
         }
 
         public void RemoveMember(User user)
         {
             Members.Remove(user);
+            databaseObject.RemoveMember(Entity, user.Entity);
         }
 
         public void AddTournament(Tournament tournament)
         {
             Tournaments.Add(tournament);
+            databaseObject.AddTournament(Entity, tournament.Entity);
         }
 
-        public void RemoverTournament(Tournament tournament)
+        public void RemoveTournament(Tournament tournament)
         {
             Tournaments.Remove(tournament);
+            databaseObject.RemoveTournament(Entity, tournament.Entity);
         }
 
         public List<Team> GetAllTeams()
