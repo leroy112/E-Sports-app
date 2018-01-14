@@ -15,7 +15,47 @@ namespace Middletier
         #region Fields
         internal TournamentEntity Entity
         {
-            get; set;
+            get
+            {
+                TournamentEntity entity = new TournamentEntity();
+
+                entity.ID = this.ID;
+                entity.Name = this.Name;
+                entity.SetGameName(EnumToString());
+                entity.StartDate = this.StartDate;
+                entity.TimeLeft = this.TimeLeft;
+                entity.description = this.description;
+                entity.admin = this.admin.Entity;
+                
+                foreach(string rule in Rules)
+                {
+                    entity.Rules.Add(rule);
+                }
+
+                foreach(string prize in Prizes)
+                {
+                    entity.Prizes.Add(prize);
+                }
+
+                foreach(Team team in Participants)
+                {
+                    entity.Participants.Add(team.Entity);
+                }
+
+                foreach(Match match in Matches)
+                {
+                    entity.Matches.Add(match.entity);
+                }
+                return entity;
+            }
+            set
+            {
+                this.ID = value.ID;
+                this.Name = value.Name;
+                this.SetGameName(value.EnumToString());
+                this.StartDate = value.StartDate;
+                this.TimeLeft = value.TimeLeft;
+            }
         }
 
         int ID;
@@ -148,7 +188,22 @@ namespace Middletier
                 }
             }
         }
-        
+
+        private List<string> EnumToString()
+        {
+            List<string> strings = new List<string>();
+            strings.Add(Game.ToString());
+            return strings;
+        }
+
+        public void SetGameName(List<string> gamenames)
+        {
+            foreach (string name in gamenames)
+            {
+                Game = (GameName)Enum.Parse(typeof(GameName), name);
+            }
+        }
+
         #endregion
     }
 }

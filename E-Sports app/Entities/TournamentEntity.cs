@@ -32,5 +32,23 @@ namespace Entities
                 Game = (GameName)Enum.Parse(typeof(GameName), name);
             }
         }
+
+        public List<string> EnumToString()
+        {
+            List<string> strings = new List<string>();
+            strings.Add(Game.ToString());
+            return strings;
+        }
+        public void SetGame(string game)
+        {
+            if(game == "LeagueOfLegends")
+            {
+                Game = GameName.LeagueOfLegends;
+            }
+            else if(game == "CSGO")
+            {
+                Game = GameName.CSGO;
+            }
+        }
     }
 }
