@@ -21,5 +21,6 @@ namespace Entities
         public List<TeamEntity> Teams { get; set; }
 
         #endregion
+
     }
 }

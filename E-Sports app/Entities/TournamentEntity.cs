@@ -16,8 +16,8 @@ namespace Entities
         public GameName Game { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime TimeLeft { get; set; }
-        public string description { get; set; }
-        public UserEntity admin { get; set; }
+        public string Description { get; set; }
+        public UserEntity Admin { get; set; }
         public List<string> Rules { get; set; }
         public List<string> Prizes { get; set; }
         public List<TeamEntity> Participants { get; set; }

@@ -88,7 +88,7 @@ namespace DAL
                 using (conn)
                 {
                     conn.Open();
-                    SqlCommand myCommand = new SqlCommand("UPDATE toernooi SET Beschrijving = '" + entity.description + "' WHERE ID = '" + entity.ID + "')", conn);
+                    SqlCommand myCommand = new SqlCommand("UPDATE toernooi SET Beschrijving = '" + entity.Description + "' WHERE ID = '" + entity.ID + "')", conn);
                     myCommand.ExecuteNonQuery();
                     conn.Close();
                 }
@@ -106,7 +106,7 @@ namespace DAL
                 using (conn)
                 {
                     conn.Open();
-                    SqlCommand myCommand = new SqlCommand("UPDATE toernooi SET Admin_Username = '" + entity.admin + "' WHERE ID = '" + entity.ID + "')", conn);
+                    SqlCommand myCommand = new SqlCommand("UPDATE toernooi SET Admin_Username = '" + entity.Admin + "' WHERE ID = '" + entity.ID + "')", conn);
                     myCommand.ExecuteNonQuery();
                     conn.Close();
                 }
@@ -195,9 +195,22 @@ namespace DAL
             }
         }
 
-        public void AddMatch(MatchEntity entity)
+        public void AddMatch(TeamEntity Team1entity, TeamEntity Team2entity, TournamentEntity tournamententity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (conn)
+                {
+                    conn.Open();
+                    SqlCommand myCommand = new SqlCommand("INSERT INTO Wedstrijd (Toernooi_ID, Team1_ID, Team2_ID) Values('" + tournamententity.ID + "', '" + Team1entity.ID + "', '" + Team2entity.ID + "')", conn);
+                    myCommand.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (SqlException)
+            {
+
+            }
         }
 
         public List<TournamentEntity> GetAllTournaments()
@@ -223,11 +236,11 @@ namespace DAL
                                 TournamentEntity entity = new TournamentEntity();
 
                                 entity.ID = reader.GetInt32(reader.GetOrdinal("ID"));
-                                entity.admin.Username = reader.GetString(reader.GetOrdinal("Admin_Username"));
+                                entity.Admin.Username = reader.GetString(reader.GetOrdinal("Admin_Username"));
                                 entity.Name = reader.GetString(reader.GetOrdinal("Naam"));
                                 entity.SetGame(reader.GetString(reader.GetOrdinal("Game")));
                                 entity.StartDate = reader.GetDateTime(reader.GetOrdinal("Datum"));
-                                entity.description = reader.GetString(reader.GetOrdinal("Beschrijving"));
+                                entity.Description = reader.GetString(reader.GetOrdinal("Beschrijving"));
 
                                 entities.Add(entity);
                             }

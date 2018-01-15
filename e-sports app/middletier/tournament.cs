@@ -4,15 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entities;
+using DAL;
 
 namespace Middletier
 {
     public class Tournament
     {
+        private DALTournament DatabaseObject = new DALTournament();
 
         public enum GameName {LeagueOfLegends, CSGO }
 
         #region Fields
+
         internal TournamentEntity Entity
         {
             get
@@ -21,11 +24,11 @@ namespace Middletier
 
                 entity.ID = this.ID;
                 entity.Name = this.Name;
-                entity.Game = 
+                entity.SetGameName(EnumToString());
                 entity.StartDate = this.StartDate;
                 entity.TimeLeft = this.TimeLeft;
-                entity.description = this.description;
-                entity.admin = this.admin.Entity;
+                entity.Description = this.description;
+                entity.Admin = this.admin.Entity;
                 
                 foreach(string rule in Rules)
                 {
@@ -44,7 +47,7 @@ namespace Middletier
 
                 foreach(Match match in Matches)
                 {
-                    entity.Matches.Add(match.entity);
+                    entity.Matches.Add(match.Entity);
                 }
                 return entity;
             }
@@ -52,7 +55,7 @@ namespace Middletier
             {
                 this.ID = value.ID;
                 this.Name = value.Name;
-                this.Game = value.Game;
+                this.SetGameName(value.EnumToString());
                 this.StartDate = value.StartDate;
                 this.TimeLeft = value.TimeLeft;
             }
@@ -98,16 +101,19 @@ namespace Middletier
         public void SetName(string name)
         {
             this.Name = name;
+            DatabaseObject.SetName(Entity);
         }
 
         public void SetGame(GameName game)
         {
             this.Game = game;
+            DatabaseObject.SetGame(Entity);
         }
 
         public void SetStartDate(DateTime startdate)
         {
             this.StartDate = startdate;
+            DatabaseObject.SetStartDate(Entity);
         }
 
         public TimeSpan CalculateTimeLeft(DateTime timenow)
@@ -120,11 +126,13 @@ namespace Middletier
         public void SetDescription(string description)
         {
             this.description = description;
+            DatabaseObject.SetDescription(Entity);
         }
 
         public void SetAdmin(User admin)
         {
             this.admin = admin;
+            DatabaseObject.SetAdmin(Entity);
         }
 
         public void SetRules(List<string> newrules)
@@ -133,6 +141,7 @@ namespace Middletier
             {
                 Rules.Add(rule);
             }
+            DatabaseObject.SetRules(Entity);
         }
 
         public void SetPrizes(List<string> newprizes)
@@ -141,21 +150,25 @@ namespace Middletier
             {
                 Prizes.Add(prize);
             }
+            DatabaseObject.SetPrizes(Entity);
         }
 
         public void AddTeam(Team team)
         {
             Participants.Add(team);
+            DatabaseObject.AddTeam(team.Entity, Entity);
         }
 
         public void RemoveTeam(Team team)
         {
             Participants.Remove(team);
+            DatabaseObject.RemoveTeam(team.Entity, Entity);
         }
 
         public void AddMatch(Match match)
         {
             Matches.Add(match);
+            DatabaseObject.AddMatch(match.Entity.Team1, match.Entity.Team2, this.Entity);
         }
 
         public void CalculateSeeding()
@@ -163,11 +176,11 @@ namespace Middletier
             throw new NotImplementedException();
         }
 
-        public void CreateMatches()
+        private void CreateMatches(Tournament tournament)
         {
             if(team1 != null && team2 != null)
             {
-                Match match = new Match(team1,team2);
+                Match match = new Match(tournament.ID, team1, team2);
                 AddMatch(match);
                 team1 = null;
                 team2 = null;
@@ -191,9 +204,19 @@ namespace Middletier
 
         private List<string> EnumToString()
         {
-
+            List<string> strings = new List<string>();
+            strings.Add(Game.ToString());
+            return strings;
         }
-        
+
+        public void SetGameName(List<string> gamenames)
+        {
+            foreach (string name in gamenames)
+            {
+                Game = (GameName)Enum.Parse(typeof(GameName), name);
+            }
+        }
+
         #endregion
     }
 }
