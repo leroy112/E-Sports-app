@@ -10,10 +10,11 @@ namespace UI.Models
     {
         #region Fields
 
-        public User LoggedInUser = new User("User1", Account_Type.Player, "Leroy", "Van de Ven", "84745834", "Vi0llet", "Leroylyon@hotmail.com");
-        private Team team = new Team();
+       
+        public Team team = new Team();
         public List<Team> Myteams = new List<Team>();
         public List<Team> AllTeams = new List<Team>();
+        public List<Team> OtherTeams = new List<Team>();
 
         #endregion
 
@@ -27,11 +28,22 @@ namespace UI.Models
             }
         }
 
-        public void LoadMyTeams()
+        public void LoadMyTeams(User loggedinuser)
         {
-            foreach(Team team in team.GetMyTeams(LoggedInUser))
+            foreach(Team team in team.GetMyTeams(loggedinuser))
             {
                 Myteams.Add(team);
+            }
+        }
+
+        public void FillOtherTeams()
+        {
+            foreach (Team team in AllTeams)
+            {
+                if (!Myteams.Contains(team))
+                {
+                    OtherTeams.Add(team);
+                }
             }
         }
 

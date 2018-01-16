@@ -216,6 +216,7 @@ namespace DAL
 
         public List<TournamentEntity> GetAllTournaments()
         {
+            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database=dbi346272;User Id = dbi346272 Password=Test123;");
 
             List<TournamentEntity> entities = new List<TournamentEntity>();
             try

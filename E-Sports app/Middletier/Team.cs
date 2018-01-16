@@ -24,14 +24,20 @@ namespace Middletier
                 entity.ShortHandle = this.ShortHandle;
                 entity.Password = this.Password;
 
-                foreach (User member in Members)
+                if(Members.Count == 0)
                 {
-                    entity.Members.Add(member.Entity);
+                    foreach (User member in Members)
+                    {
+                        entity.Members.Add(member.Entity);
+                    }
                 }
 
-                foreach (Tournament tournament in Tournaments)
+                if(Tournaments != null)
                 {
-                    entity.Tournaments.Add(tournament.Entity);
+                    foreach (Tournament tournament in Tournaments)
+                    {
+                        entity.Tournaments.Add(tournament.Entity);
+                    }
                 }
 
                 return entity;

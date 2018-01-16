@@ -4,15 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entities;
+using DAL;
 
 namespace Middletier
 {
     public class Tournament
     {
+        private DALTournament DatabaseObject = new DALTournament();
 
         public enum GameName {LeagueOfLegends, CSGO }
 
         #region Fields
+
         internal TournamentEntity Entity
         {
             get
@@ -24,27 +27,39 @@ namespace Middletier
                 entity.SetGameName(EnumToString());
                 entity.StartDate = this.StartDate;
                 entity.TimeLeft = this.TimeLeft;
-                entity.description = this.description;
-                entity.admin = this.admin.Entity;
+                entity.Description = this.description;
+                entity.Admin = this.admin.Entity;
                 
-                foreach(string rule in Rules)
+                if(Rules.Count >= 0)
                 {
-                    entity.Rules.Add(rule);
+                    foreach (string rule in Rules)
+                    {
+                        entity.Rules.Add(rule);
+                    }
                 }
 
-                foreach(string prize in Prizes)
+                if(Prizes.Count >= 0)
                 {
-                    entity.Prizes.Add(prize);
+                    foreach (string prize in Prizes)
+                    {
+                        entity.Prizes.Add(prize);
+                    }
                 }
 
-                foreach(Team team in Participants)
+                if(Participants.Count >= 0)
                 {
-                    entity.Participants.Add(team.Entity);
+                    foreach (Team team in Participants)
+                    {
+                        entity.Participants.Add(team.Entity);
+                    }
                 }
 
-                foreach(Match match in Matches)
+                if(Matches.Count >= 0)
                 {
-                    entity.Matches.Add(match.entity);
+                    foreach (Match match in Matches)
+                    {
+                        entity.Matches.Add(match.Entity);
+                    }
                 }
                 return entity;
             }
@@ -55,20 +70,40 @@ namespace Middletier
                 this.SetGameName(value.EnumToString());
                 this.StartDate = value.StartDate;
                 this.TimeLeft = value.TimeLeft;
+
+                foreach(string rule in value.Rules)
+                {
+                    this.Rules.Add(rule);
+                }
+
+                foreach(string price in value.Prizes)
+                {
+                    this.Prizes.Add(price);
+                }
+
+                foreach(TeamEntity teamentity in value.Participants)
+                {
+                    this.Participants.Add(new Team(teamentity));
+                }
+
+                foreach (MatchEntity matchentity in value.Matches)
+                {
+                    this.Matches.Add(new Match(matchentity));
+                }
             }
         }
 
-        int ID;
-        string Name;
-        GameName Game;
-        DateTime StartDate;
-        DateTime TimeLeft;
-        string description;
-        User admin;
-        List<string> Rules = new List<string>();
-        List<string> Prizes = new List<string>();
-        List<Team> Participants = new List<Team>();
-        List<Match> Matches = new List<Match>();
+        private int ID;
+        public string Name;
+        public GameName Game;
+        public DateTime StartDate;
+        public DateTime TimeLeft;
+        public string description;
+        public User admin;
+        public List<string> Rules = new List<string>();
+        public List<string> Prizes = new List<string>();
+        public List<Team> Participants = new List<Team>();
+        public List<Match> Matches = new List<Match>();
 
         Team team1;
         Team team2;
@@ -91,6 +126,11 @@ namespace Middletier
         {
             Entity = entity;
         }
+
+        public Tournament()
+        {
+
+        }
         #endregion
 
         #region Methods
@@ -98,16 +138,19 @@ namespace Middletier
         public void SetName(string name)
         {
             this.Name = name;
+            DatabaseObject.SetName(Entity);
         }
 
         public void SetGame(GameName game)
         {
             this.Game = game;
+            DatabaseObject.SetGame(Entity);
         }
 
         public void SetStartDate(DateTime startdate)
         {
             this.StartDate = startdate;
+            DatabaseObject.SetStartDate(Entity);
         }
 
         public TimeSpan CalculateTimeLeft(DateTime timenow)
@@ -120,11 +163,13 @@ namespace Middletier
         public void SetDescription(string description)
         {
             this.description = description;
+            DatabaseObject.SetDescription(Entity);
         }
 
         public void SetAdmin(User admin)
         {
             this.admin = admin;
+            DatabaseObject.SetAdmin(Entity);
         }
 
         public void SetRules(List<string> newrules)
@@ -133,6 +178,7 @@ namespace Middletier
             {
                 Rules.Add(rule);
             }
+            DatabaseObject.SetRules(Entity);
         }
 
         public void SetPrizes(List<string> newprizes)
@@ -141,33 +187,32 @@ namespace Middletier
             {
                 Prizes.Add(prize);
             }
+            DatabaseObject.SetPrizes(Entity);
         }
 
         public void AddTeam(Team team)
         {
             Participants.Add(team);
+            DatabaseObject.AddTeam(team.Entity, Entity);
         }
 
         public void RemoveTeam(Team team)
         {
             Participants.Remove(team);
+            DatabaseObject.RemoveTeam(team.Entity, Entity);
         }
 
         public void AddMatch(Match match)
         {
             Matches.Add(match);
+            DatabaseObject.AddMatch(match.Entity.Team1, match.Entity.Team2, this.Entity);
         }
 
-        public void CalculateSeeding()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateMatches()
+        private void CreateMatches(Tournament tournament)
         {
             if(team1 != null && team2 != null)
             {
-                Match match = new Match(team1,team2);
+                Match match = new Match(tournament.ID, team1, team2);
                 AddMatch(match);
                 team1 = null;
                 team2 = null;
@@ -187,6 +232,17 @@ namespace Middletier
                     }
                 }
             }
+        }
+
+        public List<Tournament> GetallTournaments()
+        {
+            List<Tournament> tournaments = new List<Tournament>();
+            foreach (TournamentEntity tournamententity in DatabaseObject.GetAllTournaments())
+            {
+                Tournament tournament = new Tournament(tournamententity);
+                tournaments.Add(tournament);
+            }
+            return tournaments;
         }
 
         private List<string> EnumToString()

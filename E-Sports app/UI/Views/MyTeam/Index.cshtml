@@ -9,10 +9,26 @@
 <hr />
 
 <div>here you will find a overview of the team that you joined:</div>
-
-<ol>
+<br />
+<div><h3>My teams: </h3></div>
+@if(Model.Myteams.Count == 0)
+{
+    <br />
+    <div>U maakt nog geen deel uit van een team</div>
+}
 @foreach (Team team in Model.Myteams)
 {
-    <li>@team.TeamName</li>
+    <br />
+    <div>@team.TeamName, @team.ShortHandle</div>
 }
-</ol>
+<br /> 
+<br />
+
+<div><h3>All teams: </h3></div>
+@foreach (Team team in Model.OtherTeams)
+{
+    <br />
+    <div>@team.TeamName, @team.ShortHandle  @Html.ActionLink("Join", "AddTeam", "MyTeam", Model.team.TeamName)</div>
+}
+
+

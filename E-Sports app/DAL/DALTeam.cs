@@ -243,16 +243,15 @@ namespace DAL
                     using (var cmd = new SqlCommand())
                     {
                         cmd.Connection = conn;
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.CommandText = "GetMyTeams('"+ userentity.Username +"')";
+                        cmd.CommandType = System.Data.CommandType.Text;
+                        cmd.CommandText = "SELECT Teamnaam, Shorthandle FROM Team INNER JOIN Team_User ON Team.ID = Team_User.Team_ID WHERE Team_User.Username = '"+userentity.Username+"'";
 
                         using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
                                 TeamEntity entity = new TeamEntity();
-
-                                entity.ID = reader.GetInt32(reader.GetOrdinal("ID"));
+                                
                                 entity.TeamName = reader.GetString(reader.GetOrdinal("TeamNaam"));
                                 entity.ShortHandle = reader.GetString(reader.GetOrdinal("ShortHandle"));
 
