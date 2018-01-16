@@ -1,8 +1,33 @@
-﻿
+﻿@using Middletier;
+@model UI.Models.TournamentModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Tournaments</h2>
+<hr />
+
+<div>here you will find a overview of the tournaments:</div>
+<br />
+<div><h3>My tournaments: </h3></div>
+@if (Model.MyTournaments.Count == 0)
+{
+    <br />
+    <div>you didnt sign your team up for any tournaments yet</div>
+}
+@foreach (Tournament tournament in Model.MyTournaments)
+{
+    <br />
+    <div>@tournament.Name, @tournament.StartDate, @tournament.Game</div>
+}
+<br />
+<br />
+
+<div><h3>All tournaments: </h3></div>
+@foreach (Tournament tournament in Model.AllTournaments)
+{
+    <br />
+    <div>@tournament.Name, @tournament.StartDate</div>
+}
 

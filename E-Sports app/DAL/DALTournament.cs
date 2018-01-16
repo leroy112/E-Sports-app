@@ -13,7 +13,7 @@ namespace DAL
     {
         #region fields
 
-        SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database=dbi346272;User Id = dbi346272 Password=Test123;");
+        SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database=dbi346272;User Id = dbi346272 Password=Test123");
 
         #endregion
 
@@ -120,7 +120,7 @@ namespace DAL
 
         public void SetRules(TournamentEntity entity)
         {
-            foreach (string rule in entity.Rules)
+            foreach (RuleEntity rule in entity.Rules)
             {
                 try
                 {
@@ -141,7 +141,7 @@ namespace DAL
 
         public void SetPrizes(TournamentEntity entity)
         {
-            foreach (string prize in entity.Prizes)
+            foreach (PriceEntity prize in entity.Prizes)
             {
                 try
                 {
@@ -216,8 +216,7 @@ namespace DAL
 
         public List<TournamentEntity> GetAllTournaments()
         {
-            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database=dbi346272;User Id = dbi346272 Password=Test123;");
-
+            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database=dbi346272;User Id = dbi346272 Password=Test123");
             List<TournamentEntity> entities = new List<TournamentEntity>();
             try
             {
@@ -240,6 +239,117 @@ namespace DAL
                                 entity.SetGame(reader.GetString(reader.GetOrdinal("Game")));
                                 entity.StartDate = reader.GetDateTime(reader.GetOrdinal("Datum"));
                                 entity.Description = reader.GetString(reader.GetOrdinal("Beschrijving"));
+
+                                entities.Add(entity);
+                            }
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+            catch (SqlException)
+            {
+
+            }
+            return entities;
+        }
+
+        public List<TournamentEntity> GetMyTournaments(UserEntity userentity)
+        {
+            List<TournamentEntity> entities = new List<TournamentEntity>();
+            try
+            {
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (var cmd = new SqlCommand("GetMyTournaments '" + userentity.Username + "'", conn))
+                    {
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                TournamentEntity entity = new TournamentEntity();
+
+                                entity.ID = reader.GetInt32(reader.GetOrdinal("ID"));
+                                entity.Admin.Username = reader.GetString(reader.GetOrdinal("Admin_Username"));
+                                entity.Name = reader.GetString(reader.GetOrdinal("Naam"));
+                                entity.SetGame(reader.GetString(reader.GetOrdinal("Game")));
+                                entity.StartDate = reader.GetDateTime(reader.GetOrdinal("Datum"));
+                                entity.Description = reader.GetString(reader.GetOrdinal("Beschrijving"));
+
+                                entities.Add(entity);
+                            }
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+            catch (SqlException)
+            {
+
+            }
+            return entities;
+        }
+
+        public List<RuleEntity> GetAllRules()
+        {
+            List<RuleEntity> entities = new List<RuleEntity>();
+            try
+            {
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (var cmd = new SqlCommand("SELECT * FROM regel ORDER BY Tournament_ID", conn))
+                    {
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                RuleEntity entity = new RuleEntity();
+
+                                entity.ID = reader.GetInt32(reader.GetOrdinal("ID"));
+                                entity.TournamentID = reader.GetInt32(reader.GetOrdinal("Tournament_ID"));
+                                entity.Rulestring = reader.GetString(reader.GetOrdinal("Regel"));
+
+                                entities.Add(entity);
+                            }
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+            catch (SqlException)
+            {
+
+            }
+            return entities;
+        }
+
+        public List<PriceEntity> GetAllPrices()
+        {
+            List<PriceEntity> entities = new List<PriceEntity>();
+            try
+            {
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (var cmd = new SqlCommand("SELECT * FROM Prijs ORDER BY Tournament_ID", conn))
+                    {
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                PriceEntity entity = new PriceEntity();
+
+                                entity.ID = reader.GetInt32(reader.GetOrdinal("ID"));
+                                entity.TournamentID = reader.GetInt32(reader.GetOrdinal("Tournament_ID"));
+                                entity.Pricestring = reader.GetString(reader.GetOrdinal("Regel"));
 
                                 entities.Add(entity);
                             }

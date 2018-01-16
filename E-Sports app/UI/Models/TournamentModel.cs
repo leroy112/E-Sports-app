@@ -9,33 +9,64 @@ namespace UI.Models
     public class TournamentModel
     {
         #region Fields
-
-        Tournament Tournament = new Tournament();
-        List<Team> participants = new List<Team>();
-        List<Tournament> MyTournaments = new List<Tournament>();
-        List<string> Rules = new List<string>();
-        List<string> Prices = new List<string>();
-        List<Match> Matches = new List<Match>();
+        
+        private Tournament Tournament = new Tournament();
+        public List<Team> participants = new List<Team>();
+        public List<Tournament> MyTournaments = new List<Tournament>();
+        public List<Tournament> AllTournaments = new List<Tournament>();
+        public List<Rule> Rules = new List<Rule>();
+        public List<Price> Prices = new List<Price>();
+        public List<Match> Matches = new List<Match>();
 
         #endregion
 
         #region Methods
 
-        public void LoadData()
+        public void LoadParticipants()
         {
             foreach(Team team in Tournament.Participants)
             {
                 participants.Add(team);
             }
+        }
 
-            foreach(string rule in Tournament.Rules)
+        public void LoadAllTournaments()
+        {
+            foreach (Tournament tournament in Tournament.GetallTournaments())
             {
-                Rules.Add(rule);
+                AllTournaments.Add(tournament);
             }
+        }
 
-            foreach(string price in Tournament.Prizes)
+        public void LoadMyTournaments(User loggedinuser)
+        {
+            foreach (Tournament tournament in Tournament.GetMyTournaments(loggedinuser))
+            {
+                MyTournaments.Add(tournament);
+            }
+        }
+       
+        public void GetMatches()
+        {
+            foreach (Match match in Tournament.Matches)
+            {
+                Matches.Add(match);
+            }
+        }
+
+        public void GetPrices()
+        {
+            foreach (Price price in Tournament.Prizes)
             {
                 Prices.Add(price);
+            }
+        }
+
+        public void GetRules()
+        {
+            foreach (Rule rule in Tournament.Rules)
+            {
+                Rules.Add(rule);
             }
         }
 

@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MatchEntity.cs" />
+    <Compile Include="PriceEntity.cs" />
+    <Compile Include="RuleEntity.cs" />
     <Compile Include="TeamEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TournamentEntity.cs" />

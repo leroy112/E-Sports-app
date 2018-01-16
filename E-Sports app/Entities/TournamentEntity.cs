@@ -18,8 +18,8 @@ namespace Entities
         public DateTime TimeLeft { get; set; }
         public string Description { get; set; }
         public UserEntity Admin { get; set; }
-        public List<string> Rules { get; set; }
-        public List<string> Prizes { get; set; }
+        public List<RuleEntity> Rules { get; set; }
+        public List<PriceEntity> Prizes { get; set; }
         public List<TeamEntity> Participants { get; set; }
         public List<MatchEntity> Matches { get; set; }
 

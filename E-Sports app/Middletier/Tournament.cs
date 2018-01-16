@@ -32,17 +32,17 @@ namespace Middletier
                 
                 if(Rules.Count >= 0)
                 {
-                    foreach (string rule in Rules)
+                    foreach (Rule rule in Rules)
                     {
-                        entity.Rules.Add(rule);
+                        entity.Rules.Add(rule.Entity);
                     }
                 }
 
                 if(Prizes.Count >= 0)
                 {
-                    foreach (string prize in Prizes)
+                    foreach (Price prize in Prizes)
                     {
-                        entity.Prizes.Add(prize);
+                        entity.Prizes.Add(prize.Entity);
                     }
                 }
 
@@ -71,14 +71,14 @@ namespace Middletier
                 this.StartDate = value.StartDate;
                 this.TimeLeft = value.TimeLeft;
 
-                foreach(string rule in value.Rules)
+                foreach(RuleEntity rule in value.Rules)
                 {
-                    this.Rules.Add(rule);
+                    this.Rules.Add(new Rule(rule));
                 }
 
-                foreach(string price in value.Prizes)
+                foreach(PriceEntity price in value.Prizes)
                 {
-                    this.Prizes.Add(price);
+                    this.Prizes.Add(new Price(price));
                 }
 
                 foreach(TeamEntity teamentity in value.Participants)
@@ -100,8 +100,8 @@ namespace Middletier
         public DateTime TimeLeft;
         public string description;
         public User admin;
-        public List<string> Rules = new List<string>();
-        public List<string> Prizes = new List<string>();
+        public List<Rule> Rules = new List<Rule>();
+        public List<Price> Prizes = new List<Price>();
         public List<Team> Participants = new List<Team>();
         public List<Match> Matches = new List<Match>();
 
@@ -172,21 +172,15 @@ namespace Middletier
             DatabaseObject.SetAdmin(Entity);
         }
 
-        public void SetRules(List<string> newrules)
+        public void SetRules(Rule rule)
         {
-            foreach(string rule in newrules)
-            {
-                Rules.Add(rule);
-            }
+            Rules.Add(rule);
             DatabaseObject.SetRules(Entity);
         }
 
-        public void SetPrizes(List<string> newprizes)
+        public void SetPrizes(Price price)
         {
-            foreach(string prize in newprizes)
-            {
-                Prizes.Add(prize);
-            }
+            Prizes.Add(price);
             DatabaseObject.SetPrizes(Entity);
         }
 
@@ -237,12 +231,34 @@ namespace Middletier
         public List<Tournament> GetallTournaments()
         {
             List<Tournament> tournaments = new List<Tournament>();
-            foreach (TournamentEntity tournamententity in DatabaseObject.GetAllTournaments())
+            List<TournamentEntity> entities = DatabaseObject.GetAllTournaments();
+            foreach (TournamentEntity tournamententity in entities)
             {
-                Tournament tournament = new Tournament(tournamententity);
-                tournaments.Add(tournament);
+                tournaments.Add(new Tournament(tournamententity));
             }
             return tournaments;
+        }
+
+        public List<Tournament> GetMyTournaments(User user)
+        {
+            List<Tournament> mytournaments = new List<Tournament>();
+            List<TournamentEntity> entities = DatabaseObject.GetMyTournaments(user.Entity);
+            foreach(TournamentEntity tournamententity in entities)
+            {
+                mytournaments.Add(new Tournament(tournamententity));
+            }
+            return mytournaments;
+        }
+
+        public List<Rule> GetallRules()
+        {
+            List<Rule> rules = new List<Rule>();
+            foreach(RuleEntity ruleentity in DatabaseObject.GetAllRules())
+            {
+                Rule rule = new Rule(ruleentity);
+                rules.Add(rule);
+            }
+            return rules;
         }
 
         private List<string> EnumToString()
