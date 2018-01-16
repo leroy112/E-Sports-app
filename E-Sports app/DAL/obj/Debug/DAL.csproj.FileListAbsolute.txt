@@ -4,3 +4,5 @@ C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\DAL\obj\Debug\DAL.cspr
 C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
 C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\DAL\obj\Debug\DAL.dll
 C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\DAL\obj\Debug\DAL.pdb
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\DAL\bin\Debug\Entities.dll
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\DAL\bin\Debug\Entities.pdb

@@ -14,18 +14,50 @@ namespace Middletier
         #region Fields
         internal UserEntity Entity
         {
-            get; set;
+            get
+            {
+                UserEntity entity = new UserEntity();
+                entity.Username = this.Username;
+                entity.SetAccount(EnumToString());
+                entity.SirName = this.SirName;
+                entity.Lastname = this.Lastname;
+                entity.SteamID = this.SteamID;
+                entity.LOLUsername = this.LOLUsername;
+                entity.Email = this.Email;
+
+                foreach(Team team in Teams)
+                {
+                    entity.Teams.Add(team.Entity);
+                }
+                return entity;
+            }
+            set
+            {
+                this.Username = value.Username;
+                this.SetAccountName(value.EnumToString());
+                this.SirName = value.SirName;
+                this.Lastname = value.Lastname;
+                this.SteamID = value.SteamID;
+                this.LOLUsername = value.LOLUsername;
+                this.Email = value.Email;
+
+                foreach(TeamEntity teamentity in value.Teams)
+                {
+                    new Team(teamentity);
+                }
+
+            }
         }
 
 
-        string Username;
-        Account_Type Account;
-        string SirName;
-        string Lastname;
-        string SteamID;
-        string LOLUsername;
-        string Email;
-        List<Team> Teams = new List<Team>();
+        public string Username;
+        private Account_Type Account;
+        public string SirName;
+        public string Lastname;
+        private string SteamID;
+        private string LOLUsername;
+        private string Email;
+        private List<Team> Teams = new List<Team>();
 
         #endregion
 
@@ -108,6 +140,21 @@ namespace Middletier
         public void DeleteUser(User user)
         {
             throw new NotImplementedException();
+        }
+
+        private string EnumToString()
+        {
+            List<string> strings = new List<string>();
+            strings.Add(Account.ToString());
+            return Account.ToString();
+        }
+
+        public void SetAccountName(List<string> accounttypes)
+        {
+            foreach (string type in accounttypes)
+            {
+                Account = (Account_Type)Enum.Parse(typeof(Account_Type), type);
+            }
         }
 
         #endregion

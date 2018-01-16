@@ -1,0 +1,18 @@
+﻿@using Middletier;
+@model UI.Models.MyTeamModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>My Teams</h2>
+<hr />
+
+<div>here you will find a overview of the team that you joined:</div>
+
+<ol>
+@foreach (Team team in Model.Myteams)
+{
+    <li>@team.TeamName</li>
+}
+</ol>

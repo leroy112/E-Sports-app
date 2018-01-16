@@ -22,5 +22,23 @@ namespace Entities
 
         #endregion
 
+        public List<string> EnumToString()
+        {
+            List<string> strings = new List<string>();
+            strings.Add(Account.ToString());
+            return strings;
+        }
+        public void SetAccount(string game)
+        {
+            if (game == "Admin")
+            {
+                Account = Account_Type.Admin;
+            }
+            else if (game == "Player")
+            {
+                Account = Account_Type.Player;
+            }
+        }
+
     }
 }

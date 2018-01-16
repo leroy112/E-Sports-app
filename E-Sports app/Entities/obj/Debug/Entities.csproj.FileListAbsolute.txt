@@ -1,0 +1,6 @@
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Entities\bin\Debug\Entities.dll
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Entities\bin\Debug\Entities.pdb
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Entities\obj\Debug\Entities.csprojResolveAssemblyReference.cache
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Entities\obj\Debug\Entities.csproj.CoreCompileInputs.cache
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Entities\obj\Debug\Entities.dll
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Entities\obj\Debug\Entities.pdb

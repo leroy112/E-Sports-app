@@ -229,6 +229,47 @@ namespace DAL
             return entities;
         }
 
+        public List<TeamEntity> GetMyTeams(UserEntity userentity)
+        {
+            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database = dbi346272; User Id = dbi346272; Password = Test123");
+            List<TeamEntity> entities = new List<TeamEntity>();
+
+            try
+            {
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (var cmd = new SqlCommand())
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.CommandText = "GetMyTeams('"+ userentity.Username +"')";
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                TeamEntity entity = new TeamEntity();
+
+                                entity.ID = reader.GetInt32(reader.GetOrdinal("ID"));
+                                entity.TeamName = reader.GetString(reader.GetOrdinal("TeamNaam"));
+                                entity.ShortHandle = reader.GetString(reader.GetOrdinal("ShortHandle"));
+
+                                entities.Add(entity);
+                            }
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+            catch (SqlException)
+            {
+
+            }
+            return entities;
+        }
+
 
         #endregion
 

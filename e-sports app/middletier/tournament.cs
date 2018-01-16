@@ -58,20 +58,40 @@ namespace Middletier
                 this.SetGameName(value.EnumToString());
                 this.StartDate = value.StartDate;
                 this.TimeLeft = value.TimeLeft;
+
+                foreach(string rule in value.Rules)
+                {
+                    this.Rules.Add(rule);
+                }
+
+                foreach(string price in value.Prizes)
+                {
+                    this.Prizes.Add(price);
+                }
+
+                foreach(TeamEntity teamentity in value.Participants)
+                {
+                    this.Participants.Add(new Team(teamentity));
+                }
+
+                foreach (MatchEntity matchentity in value.Matches)
+                {
+                    this.Matches.Add(new Match(matchentity));
+                }
             }
         }
 
-        int ID;
-        string Name;
-        GameName Game;
-        DateTime StartDate;
-        DateTime TimeLeft;
-        string description;
-        User admin;
-        List<string> Rules = new List<string>();
-        List<string> Prizes = new List<string>();
-        List<Team> Participants = new List<Team>();
-        List<Match> Matches = new List<Match>();
+        private int ID;
+        public string Name;
+        public GameName Game;
+        public DateTime StartDate;
+        public DateTime TimeLeft;
+        public string description;
+        public User admin;
+        public List<string> Rules = new List<string>();
+        public List<string> Prizes = new List<string>();
+        public List<Team> Participants = new List<Team>();
+        public List<Match> Matches = new List<Match>();
 
         Team team1;
         Team team2;
@@ -93,6 +113,11 @@ namespace Middletier
         public Tournament(TournamentEntity entity)
         {
             Entity = entity;
+        }
+
+        public Tournament()
+        {
+
         }
         #endregion
 
@@ -171,11 +196,6 @@ namespace Middletier
             DatabaseObject.AddMatch(match.Entity.Team1, match.Entity.Team2, this.Entity);
         }
 
-        public void CalculateSeeding()
-        {
-            throw new NotImplementedException();
-        }
-
         private void CreateMatches(Tournament tournament)
         {
             if(team1 != null && team2 != null)
@@ -200,6 +220,17 @@ namespace Middletier
                     }
                 }
             }
+        }
+
+        public List<Tournament> GetallTournaments()
+        {
+            List<Tournament> tournaments = new List<Tournament>();
+            foreach (TournamentEntity tournamententity in DatabaseObject.GetAllTournaments())
+            {
+                Tournament tournament = new Tournament(tournamententity);
+                tournaments.Add(tournament);
+            }
+            return tournaments;
         }
 
         private List<string> EnumToString()

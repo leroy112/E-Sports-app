@@ -42,25 +42,31 @@ namespace Middletier
                 this.TeamName = value.TeamName;
                 this.ShortHandle = value.ShortHandle;
                 this.Password = value.Password;
-
-                foreach (UserEntity member in value.Members)
+                
+                if(value.Members != null)
                 {
-                    this.Members.Add(new User(member));
+                    foreach (UserEntity member in value.Members)
+                    {
+                        this.Members.Add(new User(member));
+                    }
                 }
 
-                foreach (TournamentEntity tournament in value.Tournaments)
+                if(value.Tournaments != null)
                 {
-                    this.Tournaments.Add(new Tournament(tournament));
+                    foreach (TournamentEntity tournament in value.Tournaments)
+                    {
+                        this.Tournaments.Add(new Tournament(tournament));
+                    }
                 }
             }
         }
 
-        int ID;
-        string TeamName;
-        string ShortHandle;
-        string Password;
-        List<User> Members = new List<User>();
-        List<Tournament> Tournaments = new List<Tournament>();
+        private int ID;
+        public string TeamName;
+        public string ShortHandle;
+        private string Password;
+        public List<User> Members = new List<User>();
+        public List<Tournament> Tournaments = new List<Tournament>();
 
         #endregion
 
@@ -78,6 +84,12 @@ namespace Middletier
         {
             Entity = entity;
         }
+
+        public Team()
+        {
+
+        }
+
         #endregion
 
         #region Methods
@@ -130,6 +142,18 @@ namespace Middletier
             List<TeamEntity> entities = databaseObject.GetAllTeams();
 
             foreach(TeamEntity entity in entities)
+            {
+                teams.Add(new Team(entity));
+            }
+            return teams;
+        }
+
+        public List<Team> GetMyTeams(User user)
+        {
+            List<Team> teams = new List<Team>();
+            List<TeamEntity> entities = databaseObject.GetMyTeams(user.Entity);
+
+            foreach (TeamEntity entity in entities)
             {
                 teams.Add(new Team(entity));
             }

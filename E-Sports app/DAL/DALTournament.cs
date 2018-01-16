@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 using System.Data.SqlClient;
 using Entities;
 
@@ -12,7 +13,7 @@ namespace DAL
     {
         #region fields
 
-        SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database = dbi346272; User Id = dbi346272; Password = Test123");
+        SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database=dbi346272;User Id = dbi346272 Password=Test123;");
 
         #endregion
 
@@ -223,13 +224,10 @@ namespace DAL
                 {
                     conn.Open();
 
-                    using (var cmd = new SqlCommand())
+                    using (var cmd = new SqlCommand("SELECT * FROM [Toernooi] ORDER BY[datum]", conn))
                     {
-                        cmd.Connection = conn;
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.CommandText = "GetAllTournaments";
 
-                        using (var reader = cmd.ExecuteReader())
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {

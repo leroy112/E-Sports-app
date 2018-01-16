@@ -6,3 +6,5 @@ C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Middletier\obj\Debug\M
 C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Middletier\obj\Debug\Middletier.csproj.CoreCompileInputs.cache
 C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Middletier\obj\Debug\Middletier.dll
 C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Middletier\obj\Debug\Middletier.pdb
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Middletier\bin\Debug\Entities.dll
+C:\Users\EliteBook\Source\Repos\E-Sports-app\E-Sports app\Middletier\bin\Debug\Entities.pdb
