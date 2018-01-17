@@ -19,7 +19,7 @@
 @foreach (Tournament tournament in Model.MyTournaments)
 {
     <br />
-    <div>@Html.ActionLink(""+@tournament.Name+"", "GetTournamentDetails", "Tournament", tournament.ID) <br /> Start: @tournament.StartDate</div>
+    <div>@Html.ActionLink(""+@tournament.Name+"", "Tournament", "Tournament", new { id = tournament.ID }, null) <br /> Start: @tournament.StartDate</div>
 }
 <br />
 <br />

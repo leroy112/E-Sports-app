@@ -28,26 +28,37 @@ namespace Middletier
                 entity.StartDate = this.StartDate;
                 entity.TimeLeft = this.TimeLeft;
                 entity.Description = this.description;
-                entity.Admin = this.admin.Entity;
                 
-                foreach(string rule in Rules)
+                if(Rules.Count > 0)
                 {
-                    entity.Rules.Add(rule);
+                    foreach (Rule rule in Rules)
+                    {
+                        entity.Rules.Add(rule.Entity);
+                    }
                 }
 
-                foreach(string prize in Prizes)
+                if(Prizes.Count > 0)
                 {
-                    entity.Prizes.Add(prize);
+                    foreach (Price prize in Prizes)
+                    {
+                        entity.Prizes.Add(prize.Entity);
+                    }
                 }
 
-                foreach(Team team in Participants)
+                if(Participants.Count > 0)
                 {
-                    entity.Participants.Add(team.Entity);
+                    foreach (Team team in Participants)
+                    {
+                        entity.Participants.Add(team.Entity);
+                    }
                 }
 
-                foreach(Match match in Matches)
+                if(Matches.Count > 0)
                 {
-                    entity.Matches.Add(match.Entity);
+                    foreach (Match match in Matches)
+                    {
+                        entity.Matches.Add(match.Entity);
+                    }
                 }
                 return entity;
             }
@@ -59,37 +70,48 @@ namespace Middletier
                 this.StartDate = value.StartDate;
                 this.TimeLeft = value.TimeLeft;
 
-                foreach(string rule in value.Rules)
+                if(value.Rules != null)
                 {
-                    this.Rules.Add(rule);
+                    foreach (RuleEntity rule in value.Rules)
+                    {
+                        this.Rules.Add(new Rule(rule));
+                    }
                 }
 
-                foreach(string price in value.Prizes)
+                if(value.Prizes != null)
                 {
-                    this.Prizes.Add(price);
+                    foreach (PriceEntity price in value.Prizes)
+                    {
+                        this.Prizes.Add(new Price(price));
+                    }
                 }
 
-                foreach(TeamEntity teamentity in value.Participants)
+                if(value.Participants != null)
                 {
-                    this.Participants.Add(new Team(teamentity));
+                    foreach (TeamEntity teamentity in value.Participants)
+                    {
+                        this.Participants.Add(new Team(teamentity));
+                    }
                 }
 
-                foreach (MatchEntity matchentity in value.Matches)
+                if(value.Matches != null)
                 {
-                    this.Matches.Add(new Match(matchentity));
+                    foreach (MatchEntity matchentity in value.Matches)
+                    {
+                        this.Matches.Add(new Match(matchentity));
+                    }
                 }
             }
         }
 
-        private int ID;
+        public int ID;
         public string Name;
         public GameName Game;
         public DateTime StartDate;
         public DateTime TimeLeft;
         public string description;
-        public User admin;
-        public List<string> Rules = new List<string>();
-        public List<string> Prizes = new List<string>();
+        public List<Rule> Rules = new List<Rule>();
+        public List<Price> Prizes = new List<Price>();
         public List<Team> Participants = new List<Team>();
         public List<Match> Matches = new List<Match>();
 
@@ -107,7 +129,6 @@ namespace Middletier
             this.Game = game;
             this.StartDate = startdate;
             this.description = description;
-            this.admin = admin;
         }
 
         public Tournament(TournamentEntity entity)
@@ -154,27 +175,15 @@ namespace Middletier
             DatabaseObject.SetDescription(Entity);
         }
 
-        public void SetAdmin(User admin)
+        public void SetRules(Rule rule)
         {
-            this.admin = admin;
-            DatabaseObject.SetAdmin(Entity);
-        }
-
-        public void SetRules(List<string> newrules)
-        {
-            foreach(string rule in newrules)
-            {
-                Rules.Add(rule);
-            }
+            Rules.Add(rule);
             DatabaseObject.SetRules(Entity);
         }
 
-        public void SetPrizes(List<string> newprizes)
+        public void SetPrizes(Price price)
         {
-            foreach(string prize in newprizes)
-            {
-                Prizes.Add(prize);
-            }
+            Prizes.Add(price);
             DatabaseObject.SetPrizes(Entity);
         }
 
@@ -225,12 +234,34 @@ namespace Middletier
         public List<Tournament> GetallTournaments()
         {
             List<Tournament> tournaments = new List<Tournament>();
-            foreach (TournamentEntity tournamententity in DatabaseObject.GetAllTournaments())
+            List<TournamentEntity> entities = DatabaseObject.GetAllTournaments();
+            foreach (TournamentEntity tournamententity in entities)
             {
-                Tournament tournament = new Tournament(tournamententity);
-                tournaments.Add(tournament);
+                tournaments.Add(new Tournament(tournamententity));
             }
             return tournaments;
+        }
+
+        public List<Tournament> GetMyTournaments(User user)
+        {
+            List<Tournament> mytournaments = new List<Tournament>();
+            List<TournamentEntity> entities = DatabaseObject.GetMyTournaments(user.Entity);
+            foreach(TournamentEntity tournamententity in entities)
+            {
+                mytournaments.Add(new Tournament(tournamententity));
+            }
+            return mytournaments;
+        }
+
+        public List<Rule> GetallRules()
+        {
+            List<Rule> rules = new List<Rule>();
+            foreach(RuleEntity ruleentity in DatabaseObject.GetAllRules())
+            {
+                Rule rule = new Rule(ruleentity);
+                rules.Add(rule);
+            }
+            return rules;
         }
 
         private List<string> EnumToString()

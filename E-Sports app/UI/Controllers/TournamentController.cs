@@ -24,16 +24,11 @@ namespace UI.Controllers
             model.GetRules();
             return View(model);
         }
-
+        
         public ActionResult Tournament(int id)
         {
-            return View(tournamentmodel);
-        }
-
-        public RedirectToRouteResult GetTournamentDetails(int id)
-        {
             model.GetSpecificTournament(id);
-            return RedirectToAction("Tournament", "Tournament", id);
+            return View(tournamentmodel);
         }
     }
 }
