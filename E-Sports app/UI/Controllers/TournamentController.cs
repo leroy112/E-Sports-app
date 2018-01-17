@@ -10,19 +10,30 @@ namespace UI.Controllers
 {
     public class TournamentController : Controller
     {
-
+        SpecificTournamentModel tournamentmodel = new SpecificTournamentModel();
+        TournamentModel model = new TournamentModel();
         User LoggedInUser = new User("User1", Account_Type.Player, "Leroy", "Van de Ven", "84745834", "Vi0llet", "Leroylyon@hotmail.com");
 
         // GET: Tournament
         public ActionResult Index()
         {
-            TournamentModel model = new TournamentModel();
             model.LoadAllTournaments();
             model.LoadMyTournaments(LoggedInUser);
             model.LoadParticipants();
             model.GetPrices();
             model.GetRules();
             return View(model);
+        }
+
+        public ActionResult Tournament(int id)
+        {
+            return View(tournamentmodel);
+        }
+
+        public RedirectToRouteResult GetTournamentDetails(int id)
+        {
+            model.GetSpecificTournament(id);
+            return RedirectToAction("Tournament", "Tournament", id);
         }
     }
 }

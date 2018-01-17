@@ -12,8 +12,8 @@ namespace DAL
     public class DALTournament
     {
         #region fields
+        
 
-        SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database=dbi346272;User Id = dbi346272 Password=Test123");
 
         #endregion
 
@@ -30,6 +30,7 @@ namespace DAL
 
         public void SetName(TournamentEntity entity)
         {
+            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database = dbi346272; User Id = dbi346272; Password = Test123");
             try
             {
                 using (conn)
@@ -48,6 +49,7 @@ namespace DAL
 
         public void SetGame(TournamentEntity entity)
         {
+            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database = dbi346272; User Id = dbi346272; Password = Test123");
             try
             {
                 using (conn)
@@ -66,6 +68,7 @@ namespace DAL
 
         public void SetStartDate(TournamentEntity entity)
         {
+            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database = dbi346272; User Id = dbi346272; Password = Test123");
             try
             {
                 using (conn)
@@ -84,6 +87,7 @@ namespace DAL
 
         public void SetDescription(TournamentEntity entity)
         {
+            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database = dbi346272; User Id = dbi346272; Password = Test123");
             try
             {
                 using (conn)
@@ -100,26 +104,9 @@ namespace DAL
             }
         }
 
-        public void SetAdmin(TournamentEntity entity)
-        {
-            try
-            {
-                using (conn)
-                {
-                    conn.Open();
-                    SqlCommand myCommand = new SqlCommand("UPDATE toernooi SET Admin_Username = '" + entity.Admin + "' WHERE ID = '" + entity.ID + "')", conn);
-                    myCommand.ExecuteNonQuery();
-                    conn.Close();
-                }
-            }
-            catch (SqlException)
-            {
-
-            }
-        }
-
         public void SetRules(TournamentEntity entity)
         {
+            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database = dbi346272; User Id = dbi346272; Password = Test123");
             foreach (RuleEntity rule in entity.Rules)
             {
                 try
@@ -141,6 +128,7 @@ namespace DAL
 
         public void SetPrizes(TournamentEntity entity)
         {
+            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database = dbi346272; User Id = dbi346272; Password = Test123");
             foreach (PriceEntity prize in entity.Prizes)
             {
                 try
@@ -162,6 +150,7 @@ namespace DAL
 
         public void AddTeam(TeamEntity teamentity, TournamentEntity tournamententity)
         {
+            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database = dbi346272; User Id = dbi346272; Password = Test123");
             try
             {
                 using (conn)
@@ -180,6 +169,7 @@ namespace DAL
 
         public void RemoveTeam(TeamEntity teamentity, TournamentEntity tournamententity)
         {
+            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database = dbi346272; User Id = dbi346272; Password = Test123");
             try
             {
                 using (conn)
@@ -198,6 +188,7 @@ namespace DAL
 
         public void AddMatch(TeamEntity Team1entity, TeamEntity Team2entity, TournamentEntity tournamententity)
         {
+            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database = dbi346272; User Id = dbi346272; Password = Test123");
             try
             {
                 using (conn)
@@ -216,7 +207,7 @@ namespace DAL
 
         public List<TournamentEntity> GetAllTournaments()
         {
-            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database=dbi346272;User Id = dbi346272 Password=Test123");
+            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database = dbi346272; User Id = dbi346272; Password = Test123");
             List<TournamentEntity> entities = new List<TournamentEntity>();
             try
             {
@@ -234,7 +225,6 @@ namespace DAL
                                 TournamentEntity entity = new TournamentEntity();
 
                                 entity.ID = reader.GetInt32(reader.GetOrdinal("ID"));
-                                entity.Admin.Username = reader.GetString(reader.GetOrdinal("Admin_Username"));
                                 entity.Name = reader.GetString(reader.GetOrdinal("Naam"));
                                 entity.SetGame(reader.GetString(reader.GetOrdinal("Game")));
                                 entity.StartDate = reader.GetDateTime(reader.GetOrdinal("Datum"));
@@ -256,6 +246,7 @@ namespace DAL
 
         public List<TournamentEntity> GetMyTournaments(UserEntity userentity)
         {
+            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database = dbi346272; User Id = dbi346272; Password = Test123");
             List<TournamentEntity> entities = new List<TournamentEntity>();
             try
             {
@@ -273,7 +264,6 @@ namespace DAL
                                 TournamentEntity entity = new TournamentEntity();
 
                                 entity.ID = reader.GetInt32(reader.GetOrdinal("ID"));
-                                entity.Admin.Username = reader.GetString(reader.GetOrdinal("Admin_Username"));
                                 entity.Name = reader.GetString(reader.GetOrdinal("Naam"));
                                 entity.SetGame(reader.GetString(reader.GetOrdinal("Game")));
                                 entity.StartDate = reader.GetDateTime(reader.GetOrdinal("Datum"));
@@ -295,6 +285,7 @@ namespace DAL
 
         public List<RuleEntity> GetAllRules()
         {
+            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database = dbi346272; User Id = dbi346272; Password = Test123");
             List<RuleEntity> entities = new List<RuleEntity>();
             try
             {
@@ -331,6 +322,7 @@ namespace DAL
 
         public List<PriceEntity> GetAllPrices()
         {
+            SqlConnection conn = new SqlConnection("Server = mssql.fhict.local; Database = dbi346272; User Id = dbi346272; Password = Test123");
             List<PriceEntity> entities = new List<PriceEntity>();
             try
             {

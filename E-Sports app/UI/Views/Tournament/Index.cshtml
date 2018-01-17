@@ -19,7 +19,7 @@
 @foreach (Tournament tournament in Model.MyTournaments)
 {
     <br />
-    <div>@tournament.Name, @tournament.StartDate, @tournament.Game</div>
+    <div>@Html.ActionLink(""+@tournament.Name+"", "GetTournamentDetails", "Tournament", tournament.ID) <br /> Start: @tournament.StartDate</div>
 }
 <br />
 <br />
@@ -28,6 +28,6 @@
 @foreach (Tournament tournament in Model.AllTournaments)
 {
     <br />
-    <div>@tournament.Name, @tournament.StartDate</div>
+    <div>@tournament.Name<br /> start: @tournament.StartDate</div>
 }
 

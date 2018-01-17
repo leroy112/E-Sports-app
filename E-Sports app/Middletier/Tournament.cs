@@ -28,9 +28,8 @@ namespace Middletier
                 entity.StartDate = this.StartDate;
                 entity.TimeLeft = this.TimeLeft;
                 entity.Description = this.description;
-                entity.Admin = this.admin.Entity;
                 
-                if(Rules.Count >= 0)
+                if(Rules.Count > 0)
                 {
                     foreach (Rule rule in Rules)
                     {
@@ -38,7 +37,7 @@ namespace Middletier
                     }
                 }
 
-                if(Prizes.Count >= 0)
+                if(Prizes.Count > 0)
                 {
                     foreach (Price prize in Prizes)
                     {
@@ -46,7 +45,7 @@ namespace Middletier
                     }
                 }
 
-                if(Participants.Count >= 0)
+                if(Participants.Count > 0)
                 {
                     foreach (Team team in Participants)
                     {
@@ -54,7 +53,7 @@ namespace Middletier
                     }
                 }
 
-                if(Matches.Count >= 0)
+                if(Matches.Count > 0)
                 {
                     foreach (Match match in Matches)
                     {
@@ -71,35 +70,46 @@ namespace Middletier
                 this.StartDate = value.StartDate;
                 this.TimeLeft = value.TimeLeft;
 
-                foreach(RuleEntity rule in value.Rules)
+                if(value.Rules != null)
                 {
-                    this.Rules.Add(new Rule(rule));
+                    foreach (RuleEntity rule in value.Rules)
+                    {
+                        this.Rules.Add(new Rule(rule));
+                    }
                 }
 
-                foreach(PriceEntity price in value.Prizes)
+                if(value.Prizes != null)
                 {
-                    this.Prizes.Add(new Price(price));
+                    foreach (PriceEntity price in value.Prizes)
+                    {
+                        this.Prizes.Add(new Price(price));
+                    }
                 }
 
-                foreach(TeamEntity teamentity in value.Participants)
+                if(value.Participants != null)
                 {
-                    this.Participants.Add(new Team(teamentity));
+                    foreach (TeamEntity teamentity in value.Participants)
+                    {
+                        this.Participants.Add(new Team(teamentity));
+                    }
                 }
 
-                foreach (MatchEntity matchentity in value.Matches)
+                if(value.Matches != null)
                 {
-                    this.Matches.Add(new Match(matchentity));
+                    foreach (MatchEntity matchentity in value.Matches)
+                    {
+                        this.Matches.Add(new Match(matchentity));
+                    }
                 }
             }
         }
 
-        private int ID;
+        public int ID;
         public string Name;
         public GameName Game;
         public DateTime StartDate;
         public DateTime TimeLeft;
         public string description;
-        public User admin;
         public List<Rule> Rules = new List<Rule>();
         public List<Price> Prizes = new List<Price>();
         public List<Team> Participants = new List<Team>();
@@ -119,7 +129,6 @@ namespace Middletier
             this.Game = game;
             this.StartDate = startdate;
             this.description = description;
-            this.admin = admin;
         }
 
         public Tournament(TournamentEntity entity)
@@ -164,12 +173,6 @@ namespace Middletier
         {
             this.description = description;
             DatabaseObject.SetDescription(Entity);
-        }
-
-        public void SetAdmin(User admin)
-        {
-            this.admin = admin;
-            DatabaseObject.SetAdmin(Entity);
         }
 
         public void SetRules(Rule rule)

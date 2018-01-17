@@ -9,7 +9,8 @@ namespace UI.Models
     public class TournamentModel
     {
         #region Fields
-        
+
+        private SpecificTournamentModel tournamentmodel = new SpecificTournamentModel();
         private Tournament Tournament = new Tournament();
         public List<Team> participants = new List<Team>();
         public List<Tournament> MyTournaments = new List<Tournament>();
@@ -68,6 +69,18 @@ namespace UI.Models
             {
                 Rules.Add(rule);
             }
+        }
+
+        public Tournament GetSpecificTournament(int ID)
+        {
+            foreach(Tournament tournament in AllTournaments)
+            {
+                if(tournament.ID == ID)
+                {
+                    tournamentmodel.tournament = tournament;
+                }
+            }
+            return tournamentmodel.tournament;
         }
 
         #endregion

@@ -150,6 +150,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\MyTeamModel.cs" />
+    <Compile Include="Models\SpecificTournamentModel.cs" />
     <Compile Include="Models\StartPaginaModel.cs" />
     <Compile Include="Models\TournamentModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -192,6 +193,7 @@
     <Content Include="Views\Tournament\Index.cshtml" />
     <Content Include="Views\MyTeam\Index.cshtml" />
     <Content Include="Views\Profiel\Index.cshtml" />
+    <Content Include="Views\Tournament\Tournament.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

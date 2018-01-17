@@ -17,7 +17,6 @@ namespace Entities
         public DateTime StartDate { get; set; }
         public DateTime TimeLeft { get; set; }
         public string Description { get; set; }
-        public UserEntity Admin { get; set; }
         public List<RuleEntity> Rules { get; set; }
         public List<PriceEntity> Prizes { get; set; }
         public List<TeamEntity> Participants { get; set; }
